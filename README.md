@@ -1,84 +1,84 @@
-# Локальний M4A-конвертер
+# Local M4A Converter
 
-Невеликий GUI у браузері для macOS і Windows. Додайте один або кілька файлів, виберіть якість і отримайте окремі `.m4a` з аудіокодеком AAC.
+A small browser-based GUI for macOS and Windows. Add one or more files, choose a quality setting, and get separate `.m4a` files with AAC audio encoding.
 
-## Запуск
+## Launch
 
-Готові файли лежать у **`dist`**:
+Ready-to-use files are in **`dist`**:
 
-- **Mac з Apple Silicon (M1/M2/M3/M4 тощо):** для передачі через Google Drive використовуйте один файл **`M4A-Converter-macOS-arm64.dmg`**. Відкрийте його, перетягніть **`M4A Converter.app`** у **Applications**, потім відкрийте застосунок із Applications подвійним кліком. Python, FFmpeg та інтерфейс уже всередині. Інтернет і ручне встановлення залежностей не потрібні. Альтернатива — готовий **`M4A-Converter-macOS-arm64.zip`**: розпакуйте його штатним архіватором Mac. Саму `.app` не завантажуйте як папку в Drive: сервіс може не зберегти права виконання.
-- **Mac, включно з Intel:** можна передати лише **`M4A-Converter-macOS.command`** і відкрити його подвійним кліком. Файл містить весь код і сам розпаковує його в `~/Library/Application Support/M4A Converter`; залежності встановлюються автоматично. Для першого встановлення потрібен інтернет.
-- **Windows:** можна передати лише **`M4A-Converter-Windows.bat`** і відкрити його подвійним кліком. Файл містить весь код; оригінальна папка проєкту не потрібна. Він розпаковує програму в `%LOCALAPPDATA%\M4AConverter` і автоматично готує Python та FFmpeg. Для першого встановлення потрібен інтернет, наступні запуски працюють офлайн.
+- **Mac with Apple Silicon (M1/M2/M3/M4, etc.):** To share via Google Drive, use the single file **`M4A-Converter-macOS-arm64.dmg`**. Open it, drag **`M4A Converter.app`** to **Applications**, then open the app from Applications with a double-click. Python, FFmpeg, and the interface are already included. No internet connection or manual dependency installation is required. Alternatively, use the ready-to-use **`M4A-Converter-macOS-arm64.zip`**: extract it with the Mac's built-in archive utility. Do not upload the `.app` itself to Drive as a folder: the service may not preserve executable permissions.
+- **Mac, including Intel:** You can share only **`M4A-Converter-macOS.command`** and open it with a double-click. The file contains all the code and extracts it to `~/Library/Application Support/M4A Converter`; dependencies are installed automatically. An internet connection is required for the first setup.
+- **Windows:** You can share only **`M4A-Converter-Windows.bat`** and open it with a double-click. The file contains all the code; the original project folder is not needed. It extracts the app to `%LOCALAPPDATA%\M4AConverter` and sets up Python and FFmpeg automatically. An internet connection is required for the first setup; subsequent launches work offline.
 
-Браузер відкриється автоматично. Повторний запуск відкриває вже запущений конвертер. Для зупинки натисніть **«Закрыть конвертер»** у верхньому куті інтерфейсу. Спочатку завантажте потрібні результати: зупинка видаляє тимчасові файли. Закриття вкладки браузера саме по собі не зупиняє конвертер.
+The browser opens automatically. Launching the app again opens the converter that is already running. To stop it, click **“Close converter”** in the top corner of the interface. Download any results you need first: stopping the app deletes temporary files. Closing the browser tab alone does not stop the converter.
 
-Готову Mac-збірку перевірено на цьому Mac з Apple Silicon. На Intel використовуйте універсальний `.command` або зробіть нативну збірку на Intel. Windows-запуск потрібно перевірити на Windows. Застосунок підписаний локальним ad-hoc підписом; для розповсюдження як довіреної програми macOS потрібні Developer ID та нотаризація Apple.
+The ready-to-use Mac build has been tested on this Apple Silicon Mac. On Intel, use the universal `.command` file or create a native build on an Intel Mac. The Windows launcher should be tested on Windows. The app is signed with a local ad hoc signature; distribution as a trusted macOS app requires an Apple Developer ID and notarization.
 
-### Якщо завантажена Mac-версія не відкривається
+### If the downloaded Mac version won't open
 
-Локальний запуск і запуск після завантаження відрізняються: macOS додатково перевіряє програми з інтернету. `.dmg` зберігає структуру застосунку й права на виконання, але не замінює Developer ID та нотаризацію.
+Launching locally differs from launching after a download: macOS performs additional checks on apps from the internet. A `.dmg` preserves the app structure and executable permissions, but does not replace Developer ID signing and notarization.
 
-Після першої спроби запуску, якщо macOS блокує невідомого розробника, відкрийте **System Settings → Privacy & Security → Open Anyway**, а потім підтвердьте **Open** саме для **M4A Converter**. Це одноразовий дозвіл для цього застосунку; наступні запуски — подвійним кліком. [Інструкція Apple](https://support.apple.com/en-us/102445).
+After the first launch attempt, if macOS blocks an unidentified developer, open **System Settings → Privacy & Security → Open Anyway**, then confirm **Open** specifically for **M4A Converter**. This is a one-time permission for this app; subsequent launches can be done with a double-click. [Apple's instructions](https://support.apple.com/en-us/102445).
 
-Якщо повідомлення лише **“The application … can’t be opened”** без кнопки **Open Anyway**, не можна встановити причину лише за текстом: перевірте, що це повний готовий ZIP/DMG, розпакований штатними засобами Mac, і що обрано правильну архітектуру. Оновлена версія 1.0.1 використовує нативний Mach-O файл запуску замість shell-скрипта.
+If the only message is **“The application … can’t be opened”** and there is no **Open Anyway** button, the cause cannot be determined from the message alone: check that you have the complete ready-to-use ZIP/DMG, extracted using the Mac's built-in tools, and that you chose the correct architecture. Version 1.0.1 uses a native Mach-O launcher instead of a shell script.
 
-### Запуск із вихідної папки
+### Launching from the source folder
 
-Python не потрібно встановлювати вручну. Вихідна папка також підтримує попередній запуск:
+You don't need to install Python manually. The source folder also includes launchers:
 
-- **macOS:** відкрийте `start.command` подвійним кліком.
-- **Windows:** відкрийте `start.bat` подвійним кліком.
+- **macOS:** Double-click `start.command`.
+- **Windows:** Double-click `start.bat`.
 
-Скрипт спочатку перевірить локальне середовище та встановлений Python 3.10+. Якщо придатного Python немає, автоматично завантажить **Python 3.12** через [uv](https://docs.astral.sh/uv/guides/install-python/) у папку `.runtime` поряд із конвертером. На Mac системний `/usr/bin/python3` пропускається, щоб не відкривати інсталятор інструментів розробника Apple.
+The script first checks the local environment and for an installed Python 3.10+. If a suitable Python version is not available, it automatically downloads **Python 3.12** via [uv](https://docs.astral.sh/uv/guides/install-python/) to the `.runtime` folder next to the converter. On Mac, the system `/usr/bin/python3` is skipped to avoid opening Apple's developer tools installer.
 
-Перший запуск створить `.venv` і завантажить залежності разом із FFmpeg; для цього потрібен інтернет і доступ до Astral, GitHub та PyPI. Наступні запуски працюють офлайн. Права адміністратора, зміни PATH та ручне встановлення FFmpeg не потрібні. Якщо завантаження перерветься, запустіть скрипт повторно.
+The first launch creates a `.venv` and downloads dependencies, including FFmpeg; this requires an internet connection and access to Astral, GitHub, and PyPI. Subsequent launches work offline. Administrator privileges, PATH changes, and manual FFmpeg installation are not required. If a download is interrupted, run the script again.
 
-На Windows `start.bat` використовує вбудований Windows PowerShell; параметр виконання скрипта діє тільки для цього процесу та не змінює системну політику. Політики керованого корпоративного комп’ютера можуть обмежувати запуск або завантаження.
+On Windows, `start.bat` uses the built-in Windows PowerShell; the script execution setting applies only to that process and does not change the system policy. Policies on managed corporate computers may restrict launching or downloading.
 
-Браузер автоматично відкриє **http://127.0.0.1:8765**. Залишайте вікно запуску відкритим під час роботи. Зупинка — **Ctrl+C** у цьому вікні. Якщо браузер не відкрився, перейдіть за адресою вручну.
+The browser automatically opens **http://127.0.0.1:8765**. Keep the launcher window open while using the app. To stop it, press **Ctrl+C** in that window. If the browser does not open, navigate to the address manually.
 
-Альтернатива з термінала macOS:
+Alternatively, launch from the macOS terminal:
 
 ```sh
 cd /Users/artemshkryab/dev/proj/m4a_convertor
 ./start.command
 ```
 
-Windows (у папці проєкту):
+On Windows (from the project folder):
 
 ```bat
 start.bat
 ```
 
-Якщо порт зайнятий: `./start.command --port 8766` на Mac або `start.bat --port 8766` на Windows. Для запуску без автоматичного відкриття браузера додайте `--no-browser`. За наявності Python також можна запускати `python3 launch.py` або `py -3 launch.py` напряму.
+If the port is occupied: use `./start.command --port 8766` on Mac or `start.bat --port 8766` on Windows. To launch without automatically opening the browser, add `--no-browser`. If Python is available, you can also run `python3 launch.py` or `py -3 launch.py` directly.
 
-## Використання
+## Usage
 
-1. Перетягніть файли у вікно або натисніть **Добавить**. Можна вибрати декілька одразу.
-2. Виберіть якість слайдером: **64, 96, 128, 160, 192, 256 або 320 кбіт/с**. Типово — **192 кбіт/с**.
-3. Натисніть **Конвертировать**. Файли обробляються по черзі; видно прогрес кожного.
-4. Збережіть результат кнопкою **↓** біля файлу або всі готові файли одним **ZIP**.
+1. Drag files into the window or click **Add**. You can select multiple files at once.
+2. Choose a quality setting with the slider: **64, 96, 128, 160, 192, 256, or 320 kbps**. The default is **192 kbps**.
+3. Click **Convert**. Files are processed one at a time, with progress shown for each.
+4. Save a result with the **↓** button next to the file, or download all completed files in a single **ZIP**.
 
-Кнопка **×** скасовує обробку і прибирає файл зі списку. Після помилки можна підготувати файл до повторної конвертації кнопкою **→**, якщо оригінал ще є на поточній сторінці. Після оновлення сторінки сервер відновлює чергу та готові результати; невідправлені файли потрібно додати знову.
+The **×** button cancels processing and removes the file from the list. After an error, you can prepare a file for conversion again with the **→** button, as long as the original is still on the current page. After a page refresh, the server restores the queue and completed results; files that had not been sent must be added again.
 
-## Формати, якість і зберігання
+## Formats, quality, and storage
 
-- Поширені вхідні формати: MP3, WAV, FLAC, OGG, Opus, AIFF, AAC, M4A, WMA. Фактична підтримка залежить від декодерів FFmpeg. Також можна додати відео: буде взято першу аудіодоріжку.
-- Вихід: контейнер **M4A**, кодек **AAC**, заданий бітрейт. Навіть вхідний M4A перекодовується з обраною якістю.
-- Вищий бітрейт збільшує розмір; він не відновлює втрачені деталі оригіналу. Оцінка розміру за хвилину приблизна; контейнер і метадані теж займають місце.
-- До **2 ГіБ на файл**, до **100 файлів** у серверній черзі. Потрібно достатньо вільного місця для оригіналів, результатів і ZIP.
-- Файли обробляються локально; сервер слухає лише `127.0.0.1`. Інтерфейс не використовує зовнішні шрифти, аналітику чи хмарну конвертацію.
-- Готові результати зберігаються в тимчасовій папці **1 годину після завершення**. Прострочені результати очищаються під час наступного звернення до API. Оригінал видаляється після обробки; тимчасова папка очищається при штатній зупинці сервера. Після аварійного завершення системна тимчасова папка може залишитися.
-- Завантажуйте результати перед закриттям сервера. Завантажені копії залишаються у стандартній папці завантажень браузера.
-- На інший комп’ютер копіюйте папку проєкту **без `.venv` і `.runtime`**: середовище та, за потреби, Python створяться для нової системи під час першого запуску. Зберігайте конвертер у папці, до якої маєте права запису.
+- Common input formats: MP3, WAV, FLAC, OGG, Opus, AIFF, AAC, M4A, WMA. Actual support depends on FFmpeg decoders. You can also add video files; the first audio track will be used.
+- Output: **M4A** container, **AAC** codec, at the selected bitrate. Even an M4A input is re-encoded at the selected quality.
+- A higher bitrate increases file size; it does not restore detail lost in the original. The estimated size per minute is approximate; the container and metadata also take up space.
+- Up to **2 GiB per file** and **100 files** in the server queue. Make sure there is enough free space for the originals, results, and ZIP.
+- Files are processed locally; the server listens only on `127.0.0.1`. The interface does not use external fonts, analytics, or cloud conversion.
+- Completed results are stored in a temporary folder for **1 hour after completion**. Expired results are cleaned up on the next API request. The original is deleted after processing; the temporary folder is cleared when the server shuts down normally. After a crash, the system temporary folder may remain.
+- Download results before closing the server. Downloaded copies remain in the browser's default downloads folder.
+- When copying the project folder to another computer, **exclude `.venv` and `.runtime`**: the environment and, if needed, Python will be created for the new system on first launch. Keep the converter in a folder where you have write permission.
 
-## Перевірка
+## Verification
 
-### Збірка окремого застосунку
+### Building a standalone app
 
-Збірка потребує Python та залежностей розробника. macOS-застосунок збирається на macOS, Windows `.exe` — на Windows; [PyInstaller не виконує таку кроскомпіляцію](https://pyinstaller.org/en/stable/usage.html#supporting-multiple-operating-systems).
+Building requires Python and development dependencies. The macOS app must be built on macOS, and the Windows `.exe` on Windows; [PyInstaller does not cross-compile between operating systems](https://pyinstaller.org/en/stable/usage.html#supporting-multiple-operating-systems).
 
-На Mac для нативного стартового файлу потрібні інструменти компіляції Xcode/Command Line Tools. Вони потрібні лише розробнику під час збірки, а не користувачу готового застосунку. Збірка створює `.app`, ZIP і DMG.
+On Mac, Xcode/Command Line Tools are required to build the native launcher. These are needed only by the developer during the build, not by users of the finished app. The build creates an `.app`, ZIP, and DMG.
 
 macOS:
 
@@ -87,47 +87,47 @@ macOS:
 .venv/bin/python build_app.py
 ```
 
-Windows після підготовки `.venv`:
+Windows, after preparing `.venv`:
 
 ```bat
 .venv\Scripts\python.exe -m pip install -r requirements-build.txt
 .venv\Scripts\python.exe build_app.py
 ```
 
-Результат Windows-збірки — один **`dist\M4AConverter.exe`**, який уже містить Python та FFmpeg і працює офлайн. На цьому Mac `.exe` не зібрано; готовий Windows-файл зараз — `.bat` з автоматичною підготовкою залежностей.
+The Windows build produces a single **`dist\M4AConverter.exe`** that already includes Python and FFmpeg and works offline. A `.exe` has not been built on this Mac; the current ready-to-use Windows file is a `.bat` that automatically sets up dependencies.
 
-Оновити обидва самодостатні файли запуску після зміни коду:
+Update both self-contained launcher files after changing the code:
 
 ```sh
 .venv/bin/python build_portable.py
 ```
 
-Перевірка нативного виконуваного файлу окремо від вихідних файлів та системного FFmpeg:
+Test the native executable separately from the source files and system FFmpeg:
 
 ```sh
 .venv/bin/python tests/smoke_packaged.py dist/M4AConverter
 ```
 
-Перевірка розпакованого ZIP і застосунку, скопійованого з DMG, через Launch Services (як у Finder):
+Test the extracted ZIP and the app copied from the DMG via Launch Services (as in Finder):
 
 ```sh
 .venv/bin/python tests/smoke_macos_package.py
 ```
 
-Ця локальна перевірка не підтверджує відсутність запиту Gatekeeper після завантаження з інтернету.
+This local check does not confirm whether Gatekeeper will prompt after downloading from the internet.
 
-### Тести конвертера
+### Converter tests
 
-Після встановлення залежностей:
+After installing dependencies:
 
 ```sh
 .venv/bin/python -m unittest discover -s tests -v
 ```
 
-На Windows:
+On Windows:
 
 ```bat
 .venv\Scripts\python.exe -m unittest discover -s tests -v
 ```
 
-Тести запускають справжній FFmpeg: перевіряють конвертацію різних форматів, AAC у M4A, різні бітрейти, ZIP з однаковими назвами, помилки, скасування, очищення та доступ до локального API.
+The tests run real FFmpeg and check conversion of various formats, AAC in M4A, different bitrates, ZIP files with duplicate names, errors, cancellation, cleanup, and access to the local API.
